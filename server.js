@@ -4,6 +4,11 @@ const express = require('express');
 const PORT = process.env.PORT || 3001;
 const app= express();
 
+//parse incoming sting or array data 
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+app.use(express.json());
+
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
     let filteredResults = animalsArray;
@@ -48,6 +53,12 @@ app.get('/api/animals/:id', (req, res) => {
     const result = findById(req.params.id, animals);
     res.json(result);
 })
+
+app.post('/api/animals', (req, res) => {
+    //req.body is where our incoming content will be 
+    console.log(req.body);
+    res.json(req.body);
+});
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
